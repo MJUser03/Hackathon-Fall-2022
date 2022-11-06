@@ -43,12 +43,7 @@ def input_to_lst(input):
         list_string = ""
         i += 1
     return empty_lst
-"""
-#additional implementation - the +0 case
-test_input = "3x+2y-32z=-2,7x-2y+5z=-14,2x+4y+z=6"
-print(input_to_lst(test_input))
-print(error_input(test_input))
-"""
+
 #put equation properties into a map ex: {"equations":["3x+2y-32z=-2","7x-2y+5z=-14","2x+4y+z=6"], "x":[3,7,2], "y":[2,-2,4]}
 
 
@@ -110,25 +105,8 @@ def eq_to_map(input_lst):
                     empty_lst = []
 
     return empty_map
-""""
-test_input3 = input_to_lst(test_input)
-print(eq_to_map(test_input3))
-
-
-test_input4 = error_input(" 3x+2y-32z=-2,7x-2y+5z=-14,2x+4y+z=6") #should return 1
-test_input5 = input_to_lst("3x+2y+32z=-2,7x-2y+5z=-14,2x+4y+z=6")
-test_input6 = input_to_lst("3x+2y+332z=-2,7x-2y+5z=-14,2x+4y+z=6")
-test_input7 = input_to_lst("3x+2y-332z=-2,7x-2y+5z=-14,2x+4y+z=6")
-
-print(test_input4)
-print(eq_to_map(test_input5))
-print(eq_to_map(test_input6))
-print(eq_to_map(test_input7))
-
-
 
 #here we check to make sure out map in not maleformed/the equations can be computated
-"""
 
 def error_map(input_map):
     var_dif = 0;
@@ -149,7 +127,6 @@ def cancel_out(input_map):
     output = []
     for i in lst_of_variables:
         check_lst = input_map[i] #eg [3,7,2]
-        print(check_lst)
         index = 0
         prev_item = 0
         if len(output) != 0:
@@ -185,18 +162,6 @@ def cancel_out(input_map):
     return output
 
 
-#test = "3x-y+4z=2,17x+12y+z=14,x+12y-77z=54"
-#print(cancel_out(eq_to_map(input_to_lst(test))))
-""""
-
-print(cancel_out(eq_to_map(test_input5)))
-print(lst_of_best_equation)
-
-test_input10 = input_to_lst("3x+2y+32z=-2,7x+2y+5z=-14,2x+4y+z=6") #should return an empty lst
-print(cancel_out(eq_to_map(test_input10)))
-
-print(lst_of_best_equation)
-"""
 #when there isn't variables that cancel out we check for a common factor
 def Common_factor(input_map):
     output = []
@@ -237,19 +202,6 @@ def Common_factor(input_map):
                 index += 1
     return output
 
-
-
-
-"""
-test_input10 = input_to_lst("3x+2y+32z=-2,7x+3y+5z=-14,2x+4y+z=6") #should return an empty lst
-print(eq_to_map(test_input10))
-print(cancel_out(eq_to_map(test_input10)))
-
-print(lst_of_best_equation)
-
-print(Common_factor(eq_to_map(test_input10)))
-
-print(lst_of_best_equation)
 #note here, if two vars are equal they count towards gcf since you have to multiply one by -1
-"""
+
 

@@ -24,13 +24,13 @@ frame.pack()
 
 sprite = Image.open('spriteseven.png')
 img_new = sprite.resize((560,630))
-
 img = ImageTk.PhotoImage(img_new)
 
 label = Label(image=img)
 label.config(bg = '#F8C8DC')
 sprite.image = img
 im = frame.create_image(260,125,anchor=NW,image=img)
+label.place(x=2,y=0)
 label.pack()
 
 T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65)
