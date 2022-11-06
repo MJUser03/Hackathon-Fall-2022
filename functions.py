@@ -131,8 +131,6 @@ print(eq_to_map(test_input7))
 """
 
 def error_map(input_map):
-    print(input_map)
-    print(lst_of_variables)
     var_dif = 0;
     for i in lst_of_variables:
         if len(input_map[i])== 1:
@@ -186,8 +184,7 @@ def cancel_out(input_map):
                     index +=1
     return output
 
-test = "2x+y+z=7,2x-y+2z=6,x-2y+z=0"
-print(cancel_out(eq_to_map(input_to_lst(test))))
+
 #test = "3x-y+4z=2,17x+12y+z=14,x+12y-77z=54"
 #print(cancel_out(eq_to_map(input_to_lst(test))))
 """"
