@@ -64,7 +64,7 @@ def switch():
     if functions.error_input(Input) == 1:
         T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
 
-        instructions = "        Looks like you typed in an incorrect input..\n    \tRemember the criteria!!"
+        instructions = "   \t\tLooks like you typed in an incorrect input..\n    \t\tRemember the criteria!!"
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
