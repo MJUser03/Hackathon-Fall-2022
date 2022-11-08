@@ -82,8 +82,21 @@ def change_image(i):
 def switch():
     Input = entry.get()
     Input = functions.remove_extra_commas(functions.remove_spaces(Input))
+    if "thank" in Input.lower():
+        change_image(7)
+        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65, borderwidth=0)
+
+        instructions = "\t\tyou're so welcome"
+        T_Box.pack()
+
+        T_Box.insert(tkinter.END, instructions)
+        T_Box.config(font=("Courier", 20))
+        T_Box.place(x=340, y=50)
+        return 0
+
     if Input == "":
         Input == " "
+
     if functions.error_input(Input) == 1:
         random_lst = [3, 4, 5, 6,7,8]
         change_image(random.choice(random_lst))

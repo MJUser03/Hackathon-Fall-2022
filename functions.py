@@ -24,6 +24,10 @@ def remove_spaces(input):
         else:
             new_input += i
     return new_input
+def get_variables(input):
+    for i in input:
+        if i.isdigit() is False and i != '+' and i != '-' and i != '=' and i != ',' and i not in lst_of_variables and i !='\n':
+            lst_of_variables.append(i)
 
 #This allows users to put multiple commas but still take in the input for use
 def remove_extra_commas(input):
@@ -95,6 +99,8 @@ def input_to_lst(input):
 
 
 def eq_to_map(input_lst,Input):
+    get_variables(Input)
+    print(lst_of_variables)
     empty_map = {}
     eq_lst = []
     for i in input_lst:
@@ -104,7 +110,7 @@ def eq_to_map(input_lst,Input):
     variable = "" #use this for variables like x y z
     num = '' #use this for negative integers
     neg = 1
-    constant = 0; #use this for integers
+    constant = 0 #use this for integers
     empty_lst = []
     for i in range(num_commas(Input)+1):
         equation = input_lst[i]
@@ -120,7 +126,6 @@ def eq_to_map(input_lst,Input):
                 variable = j
             else: #if negative add the - into num
                 num = j
-
             if variable.isdigit(): #we are at a constant
                 if num != '': #num is negative
                     constant = -1 * int(variable)#set constant to the int
@@ -152,6 +157,7 @@ def eq_to_map(input_lst,Input):
                 #here we throw var:num into the map list
 
                 if constant == 0:
+
                     if '-' + str(variable) in input_lst[i]:
                         constant = -1
 
@@ -163,7 +169,6 @@ def eq_to_map(input_lst,Input):
                     constant = 0
                     neg += 1
                 else:
-                    lst_of_variables.append(variable)
                     empty_lst.append(constant)
                     empty_map[variable] = empty_lst
                     constant = 0
@@ -198,6 +203,7 @@ def cancel_out(input_map):
 
         for j in check_lst:
             if -1 * j in check_lst:
+                print(check_lst)
                 output.append(str(j)+i)
                 output.append(str((-1)*j)+i)
                 lst_of_best_equation.append(input_map["Equation"][check_lst.index((-1)*j)])
@@ -228,7 +234,7 @@ def Common_factor(input_map):
                     output.append(str(prev_item)+i)
                     output.append(str(j)+i)
                     lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
-                    lst_of_best_equation.append(input_map["Equation"][index]) #correct
+                    lst_of_best_equation.append(input_map["Equation"][check_lst.index(j)]) #correct
                     break
                 index +=1
 
@@ -237,7 +243,7 @@ def Common_factor(input_map):
                 if calc == 0:
                     output.append(str(j)+i)
                     output.append(str(prev_item)+i)
-                    lst_of_best_equation.append(input_map["Equation"][index]) #correct
+                    lst_of_best_equation.append(input_map["Equation"][check_lst.index(j)]) #correct
                     lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
                     break
                 index +=1
