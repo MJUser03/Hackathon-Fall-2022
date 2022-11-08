@@ -87,12 +87,12 @@ def switch():
         var1 = str(functions.cancel_out(to_map)[0])
         var2 = str(functions.cancel_out(to_map)[1])
 
-        instructions = "    \t\tEquations "+ str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[1]) + "\n  \t\tworks best because " + var1+ " cancels out " +  var2
+        instructions = "        \tEquations "+ str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[1]) + "\n      \tworks best because " + var1+ " cancels out " +  var2
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
         T_Box.config(font=("Courier", 20))
-        T_Box.place(x=365, y=50)
+        T_Box.place(x=330, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
         return 0
@@ -102,13 +102,13 @@ def switch():
         var1 = str(functions.Common_factor(to_map)[0])
         var2 = str(functions.Common_factor(to_map)[1])
 
-        instructions = "    \t\tEquations " + str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[
-            1]) + "\n   \t\tworks best because " + var2 + " multiplies into " + var1
+        instructions = "        \tEquations " + str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[
+            1]) + "\n      \tworks best because " + var2 + " multiplies into " + var1
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
         T_Box.config(font=("Courier", 20))
-        T_Box.place(x=365, y=50)
+        T_Box.place(x=310, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
         return 0

@@ -15,6 +15,8 @@ def num_commas(input):
             num_of_comma +=1
     return num_of_comma
 def remove_spaces(input):
+    #just adding a making everything lower-case for just managability sake
+    input.lower()
     new_input = ""
     for i in input:
         if i == " ":
@@ -62,7 +64,7 @@ def error_input(input):
             error +=1
         if i == '-' or i == '+' or i == '=':
             operators += 1
-    if num_of_comma == 0 or num_of_comma <= 2 or operators == 0:
+    if num_of_comma == 0 or num_of_comma < 2 or operators == 0:
         error +=1
     #we will check the variables in a future function
     if error != 0:
