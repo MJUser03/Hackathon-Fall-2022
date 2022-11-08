@@ -8,9 +8,51 @@ lst_of_variables = [] #gives us the variables being used in this program
 #when we take in the input we want to have it so everything is lowercase to minimize malformed inputs
 lst_of_best_equation = []
 
+def num_commas(input):
+    num_of_comma = 0
+    for i in input:
+        if i == ',':
+            num_of_comma +=1
+    return num_of_comma
+def remove_spaces(input):
+    new_input = ""
+    for i in input:
+        if i == " ":
+            new_input += ""
+        else:
+            new_input += i
+    return new_input
+
+#This allows users to put multiple commas but still take in the input for use
+def remove_extra_commas(input):
+    new_input = ""
+    fix_input = ""
+    prev_char = ''
+
+    for i in input:
+        if prev_char == '':
+            prev_char = i
+
+        if prev_char == ',' and i == ',':
+            new_input += ""
+        else:
+            prev_char = i
+            new_input += i
+    if new_input == "":
+        return " "
+
+    if new_input[-1] == ',':
+        for i in range(len(new_input)-1):
+            fix_input += new_input[i]
+
+        new_input = fix_input
+
+    return new_input
+
 def error_input(input):
     error = 0
     num_of_comma = 0
+    operators = 0
     if input == '':
         error += 1
     for i in input:
@@ -18,7 +60,9 @@ def error_input(input):
             num_of_comma +=1
         if i == ' ':
             error +=1
-    if num_of_comma != 2:
+        if i == '-' or i == '+' or i == '=':
+            operators += 1
+    if num_of_comma == 0 or operators == 0:
         error +=1
     #we will check the variables in a future function
     if error != 0:
@@ -35,7 +79,7 @@ def input_to_lst(input):
     list_string = ""
     i=0
     #in this demo we are only allowing 3 equations
-    for m in range(3):
+    for m in range(num_commas(input)):
         while input[i] != ',':
             list_string+=input[i]
             i += 1
@@ -43,25 +87,32 @@ def input_to_lst(input):
         list_string = ""
         i += 1
     return empty_lst
+#print(input_to_lst("4x+2y+31z=3,9x-3y+32z=5,10x+5y-11z=6,x+12y-5z=54"))
 
 #put equation properties into a map ex: {"equations":["3x+2y-32z=-2","7x-2y+5z=-14","2x+4y+z=6"], "x":[3,7,2], "y":[2,-2,4]}
 
 
-def eq_to_map(input_lst):
-    empty_map = {"Equation":[input_lst[0],input_lst[1],input_lst[2]]}
+def eq_to_map(input_lst,Input):
+    empty_map = {}
+    eq_lst = []
+    for i in input_lst:
+        eq_lst.append(i)
+        empty_map["Equation"] = eq_lst
+
     variable = "" #use this for variables like x y z
     num = '' #use this for negative integers
+    neg = 1
     constant = 0; #use this for integers
     empty_lst = []
-    for i in range(3):
+    for i in range(num_commas(Input)+1):
         equation = input_lst[i]
         #when we reach = we want to skip to the next list element
         for j in equation:
-
             if j == '=':
+                num = ''
                 constant = 0
+                neg = 1
                 break
-
             # check if the number is negative
             if j != '-':
                 variable = j
@@ -72,6 +123,7 @@ def eq_to_map(input_lst):
                 if num != '': #num is negative
                     constant = -1 * int(variable)#set constant to the int
                     num = ''
+
                 else:
                     if constant != 0:
                         if constant < 0: #negative
@@ -81,28 +133,40 @@ def eq_to_map(input_lst):
                             constant = constant * 10 + int(variable)
                     else:
                         constant = int(variable)
+                neg += 1
 
-            elif variable == '+' or num == '-':
+            elif variable == '+':
             #basically we want to empty everything and do nothing
-                constant = constant
+                neg += 1
+
+            elif num == '-' and equation[neg].isdigit():
+                neg += 1
+
+            elif equation[neg] in lst_of_variables:
+                neg += 1
 
             else:
                 #we reach an x y z char
                 #here we throw var:num into the map list
-                if constant == 0:
-                    constant = 1
 
+                if constant == 0:
+                    if '-' + str(variable) in input_lst[i]:
+                        constant = -1
+
+                    else:
+                        constant = 1
 
                 if variable in empty_map:
-
                     empty_map[variable].append(constant)
                     constant = 0
+                    neg += 1
                 else:
                     lst_of_variables.append(variable)
                     empty_lst.append(constant)
                     empty_map[variable] = empty_lst
                     constant = 0
                     empty_lst = []
+                    neg += 1
 
     return empty_map
 
@@ -127,38 +191,16 @@ def cancel_out(input_map):
     output = []
     for i in lst_of_variables:
         check_lst = input_map[i] #eg [3,7,2]
-        index = 0
-        prev_item = 0
         if len(output) != 0:
             break
 
         for j in check_lst:
-            if prev_item == 0:
-                prev_item = j
-                index += 1
-            else:
-                if prev_item < 0 and j > 0: #if the previous item is negative and current item is postive..
-                    if((-1*prev_item)==j):
-                        output.append(prev_item)
-                        output.append(j)
-
-                        #put the two equations into a lst
-                        lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
-                        lst_of_best_equation.append(input_map["Equation"][index])
-                        break
-                    index +=1
-                elif prev_item > 0 and j < 0: #if the previous item is postive and current is negative...
-                    if (prev_item == (-1*j)):
-                        output.append(prev_item)
-                        output.append(j)
-                        lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
-                        lst_of_best_equation.append(input_map["Equation"][index])
-                        #put the two equations into a lst
-                        break
-                    index += 1
-                else:
-                    prev_item = j
-                    index +=1
+            if -1 * j in check_lst:
+                output.append(str(j)+i)
+                output.append(str((-1)*j)+i)
+                lst_of_best_equation.append(input_map["Equation"][check_lst.index((-1)*j)])
+                lst_of_best_equation.append(input_map["Equation"][check_lst.index(j)])
+                break
     return output
 
 
@@ -181,8 +223,8 @@ def Common_factor(input_map):
             elif prev_item > j or prev_item < 0:
                 calc = prev_item % j
                 if calc == 0:
-                    output.append(prev_item)
-                    output.append(j)
+                    output.append(str(prev_item)+i)
+                    output.append(str(j)+i)
                     lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
                     lst_of_best_equation.append(input_map["Equation"][index]) #correct
                     break
@@ -191,8 +233,8 @@ def Common_factor(input_map):
             elif prev_item < j or j < 0:
                 calc = j % prev_item
                 if calc == 0:
-                    output.append(j)
-                    output.append(prev_item)
+                    output.append(str(j)+i)
+                    output.append(str(prev_item)+i)
                     lst_of_best_equation.append(input_map["Equation"][index]) #correct
                     lst_of_best_equation.append(input_map["Equation"][check_lst.index(prev_item)])
                     break
@@ -203,5 +245,3 @@ def Common_factor(input_map):
     return output
 
 #note here, if two vars are equal they count towards gcf since you have to multiply one by -1
-
-

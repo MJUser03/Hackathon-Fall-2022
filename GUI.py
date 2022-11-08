@@ -15,10 +15,7 @@ entry.config(fg='#41001f')
 entry.pack() #move to be a little higher
 entry.place(x=400,y=735)
 
-frame_start = tkinter.Frame(window)
-frame_change = tkinter.Frame(window) #used in if statement
-
-frame = Canvas(window, width = 0, height=80)
+frame = Canvas(window, width = 0, height=80, highlightthickness= 0)
 frame.config(bg = '#F8C8DC')
 frame.pack()
 
@@ -33,13 +30,13 @@ im = frame.create_image(260,125,anchor=NW,image=img)
 label.place(x=2,y=0)
 label.pack()
 
-T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65)
+T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
-instructions = "         Please type in 3 equations into the box below.\n           Do not include any spaces or extra commas!\n    An example looks like: 3x+2y-32z=-2,7x-2y+5z=-14,2x+4y+z=6"
+instructions = "    Please type in your equations into the box below.\nAn example looks like: 3x+2y-32z=-2,7x-2y+5z=-14,2x+4y+z=6"
 T_Box.pack()
 
 T_Box.insert(tkinter.END,instructions)
-T_Box.config(font = ("Courier", 15))
+T_Box.config(font = ("Courier", 20))
 T_Box.place(x=365,y=50)
 
 
@@ -55,53 +52,52 @@ def cancel_check(map):
     else:
         return 0
 
-
-
 def switch():
     Input = entry.get()
-    functions.lst_of_variables = []
-    functions.lst_of_best_equation = []
+    Input = functions.remove_extra_commas(functions.remove_spaces(Input))
+    if Input == "":
+        Input == " "
     if functions.error_input(Input) == 1:
-        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
+        T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
-        instructions = "   \t\tLooks like you typed in an incorrect input..\n    \t\tRemember the criteria!!"
+        instructions = "\tLooks like you typed in an incorrect input..\n\t\tPlease type in valid equations"
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
-        T_Box.config(font=("Courier", 15))
-        T_Box.place(x=365, y=50)
+        T_Box.config(font=("Courier", 20))
+        T_Box.place(x=310, y=50)
         return 0
-    to_map = functions.eq_to_map(functions.input_to_lst(Input))
-    if functions.error_map(to_map) ==1:
-        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
+    to_map = functions.eq_to_map(functions.input_to_lst(Input),Input)
+    if functions.error_map(to_map) == 1:
+        T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
-        instructions = "    \t\tSomethings off with the equation...\n   \t\tDouble check your variables! \n     \t\tor there isn't a clear solution to this..."
+        instructions = "            \tSomethings off with the equation...\n   \t\tDouble check your variables! \n       \tor there isn't a clear solution to this..."
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
-        T_Box.config(font=("Courier", 15))
-        T_Box.place(x=365, y=50)
+        T_Box.config(font=("Courier", 20))
+        T_Box.place(x=310, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
         return 0
 
     if cancel_check(to_map) != 0:
-        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
+        T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         var1 = str(functions.cancel_out(to_map)[0])
         var2 = str(functions.cancel_out(to_map)[1])
 
-        instructions = "    \t\tEquations "+ str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[1]) + "\n  \t\twork best because " + var1+ " cancels out " +  var2
+        instructions = "    \t\tEquations "+ str(functions.lst_of_best_equation[0]) + " and " + str(functions.lst_of_best_equation[1]) + "\n  \t\tworks best because " + var1+ " cancels out " +  var2
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
-        T_Box.config(font=("Courier", 15))
+        T_Box.config(font=("Courier", 20))
         T_Box.place(x=365, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
         return 0
     elif len(functions.Common_factor(to_map))!=0:
-        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
+        T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         var1 = str(functions.Common_factor(to_map)[0])
         var2 = str(functions.Common_factor(to_map)[1])
@@ -111,18 +107,18 @@ def switch():
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
-        T_Box.config(font=("Courier", 15))
+        T_Box.config(font=("Courier", 20))
         T_Box.place(x=365, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
         return 0
     else:
-        T_Box = Text(window, bg='#F8C8DC', fg='#41001f', height=3, width=65)
+        T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
         instructions = "  \tseems like there isn't a best equation..."
         T_Box.pack()
 
         T_Box.insert(tkinter.END, instructions)
-        T_Box.config(font=("Courier", 15))
+        T_Box.config(font=("Courier", 20))
         T_Box.place(x=365, y=50)
         functions.lst_of_best_equation = []
         functions.lst_of_variables = []
