@@ -3,6 +3,8 @@ import tkinter
 from tkinter import *
 from PIL import ImageTk, Image
 
+import random
+
 window = Tk()
 window.geometry("1000x800")
 window.title("Systems of equations girlie")
@@ -19,7 +21,7 @@ frame = Canvas(window, width = 0, height=80, highlightthickness= 0)
 frame.config(bg = '#F8C8DC')
 frame.pack()
 
-sprite = Image.open('spriteseven.png')
+sprite = Image.open('sprites\spriteseven.png')
 img_new = sprite.resize((560,630))
 img = ImageTk.PhotoImage(img_new)
 
@@ -52,12 +54,39 @@ def cancel_check(map):
     else:
         return 0
 
+def change_image(i):
+    match i:
+        case 1:
+            img.paste(Image.open("sprites\sprites.png"))
+    #there is a solution
+        case 2:
+            img.paste(Image.open("sprites\spritones.png"))
+    #there isn't a solution
+        case 3:
+            img.paste(Image.open('sprites\spritesix.png'))
+        case 4:
+            img.paste(Image.open('sprites\spritetwelve.png'))
+        case 5:
+            img.paste(Image.open("sprites\spritefive.png"))
+        case 6:
+            img.paste(Image.open("sprites\spriteeight.png"))
+        case 7:
+            img.paste(Image.open("sprites\spriteten.png"))
+        case 8:
+            img.paste(Image.open("sprites\spriteeleven.png"))
+
+
+
+
+
 def switch():
     Input = entry.get()
     Input = functions.remove_extra_commas(functions.remove_spaces(Input))
     if Input == "":
         Input == " "
     if functions.error_input(Input) == 1:
+        random_lst = [3, 4, 5, 6,7,8]
+        change_image(random.choice(random_lst))
         T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         instructions = "\tLooks like you typed in an incorrect input..\n\t\tPlease type in valid equations"
@@ -69,6 +98,8 @@ def switch():
         return 0
     to_map = functions.eq_to_map(functions.input_to_lst(Input),Input)
     if functions.error_map(to_map) == 1:
+        random_lst = [3,4,5,6,7,8]
+        change_image(random.choice(random_lst))
         T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         instructions = "            \tSomethings off with the equation...\n   \t\tDouble check your variables! \n       \tor there isn't a clear solution to this..."
@@ -82,6 +113,7 @@ def switch():
         return 0
 
     if cancel_check(to_map) != 0:
+        change_image(1)
         T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         var1 = str(functions.cancel_out(to_map)[0])
@@ -97,6 +129,7 @@ def switch():
         functions.lst_of_variables = []
         return 0
     elif len(functions.Common_factor(to_map))!=0:
+        change_image(1)
         T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
 
         var1 = str(functions.Common_factor(to_map)[0])
@@ -113,6 +146,7 @@ def switch():
         functions.lst_of_variables = []
         return 0
     else:
+        change_image(2)
         T_Box = Text(window,bg='#F8C8DC',fg='#41001f',height = 3, width = 65, borderwidth=0)
         instructions = "  \tseems like there isn't a best equation..."
         T_Box.pack()
