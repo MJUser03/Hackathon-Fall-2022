@@ -100,7 +100,6 @@ def input_to_lst(input):
 
 def eq_to_map(input_lst,Input):
     get_variables(Input)
-    print(lst_of_variables)
     empty_map = {}
     eq_lst = []
     for i in input_lst:
@@ -203,7 +202,6 @@ def cancel_out(input_map):
 
         for j in check_lst:
             if -1 * j in check_lst:
-                print(check_lst)
                 output.append(str(j)+i)
                 output.append(str((-1)*j)+i)
                 lst_of_best_equation.append(input_map["Equation"][check_lst.index((-1)*j)])

@@ -2,7 +2,6 @@ import functions
 import tkinter
 from tkinter import *
 from PIL import ImageTk, Image
-
 import random
 
 window = Tk()
@@ -20,6 +19,7 @@ entry.place(x=400,y=735)
 frame = Canvas(window, width = 0, height=80, highlightthickness= 0)
 frame.config(bg = '#F8C8DC')
 frame.pack()
+
 
 sprite = Image.open('sprites\spriteseven.png')
 img_new = sprite.resize((560,630))
@@ -47,6 +47,29 @@ T_Box.place(x=365,y=50)
 
 #if output == "smelly!"
 #change image to crying
+
+"""
+def blink():
+    threading.Timer(5.0,blink).start()
+    img.paste(Image.open("sprites\sprites.png"))
+
+def unblink():
+    threading.Timer(9.0,unblink).start()
+    img.paste(Image.open("sprites\spriteseven.png"))
+
+def idle():
+    threading.Timer(50.0,idle).start()
+    img.paste(Image.open("sprites\spritefive.png"))
+
+def sleep():
+    threading.Timer(60.0,sleep).start()
+    img.paste(Image.open("sprites\sprites.png"))
+
+unblink()
+blink()
+idle()
+sleep()
+"""
 
 def cancel_check(map):
     if functions.cancel_out(map) != []:
