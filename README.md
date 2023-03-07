@@ -1,8 +1,15 @@
 # Hackathon-Fall-2022
 Python GUI that takes in 3 equations and returns the best two to use for a system of equations and why.
 
-To use compile the GUI.py file and the GUI should automatically pop up.
+How to use:
+-
+- Make sure python is downloaded onto system
+- open pythonProject2 file in shell
+- use command: python GUI.py
+- write in equations into box then press enter on the right hand side.
 
-Type in 3 equations with th specifications (included in the GUI) and you'll get an answer from the sprite :)
-
-This is just a demo so there are some edges that need to be debugged <3
+Equation rules:
+- 
+- Make sure it's in x+z+c=0 format (variables and numbers can vary)
+- Equations are separated by commas (,)
+- Takes in n > 2 equations (1 or 2 equations won't work)
