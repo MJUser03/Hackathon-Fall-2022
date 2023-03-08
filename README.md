@@ -3,7 +3,7 @@ Python GUI that takes in 3 equations and returns the best two to use for a syste
 
 How to use:
 -
-- Make sure python is downloaded onto system
+- Make sure python is downloaded 
 - open pythonProject2 file in shell
 - use command: python GUI.py
 - write in equations into box then press enter on the right hand side.
